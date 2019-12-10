@@ -1,0 +1,24 @@
+{
+  "name": "change-log",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuhui666/change-log.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liuhui666/change-log/issues"
+  },
+  "homepage": "https://github.com/liuhui666/change-log#readme",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "moment": "^2.24.0"
+  }
+}
