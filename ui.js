@@ -1,106 +1,73 @@
 'use strict'
 const React = require('react')
 const { useState } = require('react')
-const { render, Box, Color, useInput } = require('ink')
+const { render, Box, Color, useInput, Text } = require('ink')
 const TextInput = require('ink-text-input')
 const SelectInput = require('ink-select-input')
 const writeFile = require('./index')
 
-// class SearchQuery extends React.Component {
-// 	constructor() {
-// 		super();
 
-// 		this.state = {
-// 			query: '',
-// 			showInput: false,
-// 			order_number: 1,
-// 		};
-
-// 		this.handleSelect = this.handleSelect.bind(this);
-// 		this.handleSubmit = this.handleSubmit.bind(this);
-// 	}
-
-// 	handleSelect(item) {
-// 		this.setState({
-// 			showInput: true
-// 		})
-// 	}
-
-// 	render() {
-// 		// const { showInput } = this.state;
-
-// 		const items = [{
-// 			label: '否',
-// 			value: false
-// 		}, {
-// 			label: '是',
-// 			value: true
-// 		}];
-
-// 		return (
-// 			<div>
-// 				{
-// 					// showInput &&
-// 					<div>
-// 						<Color white>请输入changelog内容 ：</Color >
-// 						<br />
-// 						{
-// 							<TextInput.UncontrolledTextInput
-// 							onSubmit={this.handleSubmit}
-// 						/>
-// 						}
-// 					</div>
-// 				}
-// 				{/* {
-// 					!showInput && <div>
-// 						<Color green>是否需要输入版本号和文件路径</Color>
-// 						<br />
-// 						<SelectInput.default items={items} onSelect={this.handleSelect} />
-// 					</div>
-// 				} */}
-// 			</div>
-
-// 		);
-// 	}
-
-// 	handleSubmit(v) {
-// 		writeFile({
-// 			content: v,
-// 			url: './version.html'
-// 		}).then(() => {
-// 			process.exit();
-// 		})
-// 	}
-// }
-
-// module.exports = <SearchQuery />
 
 const SearchQuery = () => {
   const [order_num, changeNum] = useState(1)
+  const [logList, changeLogList] = useState([])
+  const [content, changeContent] = useState('')
   useInput((input, key) => {
     if (input === 'q') {
-      console.log('退出吧')
+      let result = ''
+      logList.forEach((item, index) => {
+        result += `\r\n\t\t${index + 1}. ${item}`
+      })
+
+      writeFile({
+        content: result,
+        url: './version.html'
+      }).then(() => {
+        process.exit()
+      })
     }
     if (key.return) {
-	  // 按回车 换行 记录之前的输入
+      // 按回车 换行 记录之前的输入
 
-	  changeNum(order_num + 1)
+      changeNum(order_num + 1)
+
+      changeLogList(() => {
+        logList.push(content)
+        return logList
+      })
+      changeContent('')
     }
   })
   return (
     <Box>
-      {
+      <div>
+        <Color white>请输入changelog内容 ：</Color>
+        <Color green>回车换行，输入q退出</Color>
+        <br />
         <div>
-          <Color white>请输入changelog内容 ：</Color>
-          <br />
-          {
-            <Box>
-              <span>{order_num}.</span>
-              <TextInput.UncontrolledTextInput onSubmit={this.handleSubmit} />
-            </Box>
-          }
+          {logList.map((item, index) => {
+            return (
+              <div key={index}>
+                <Text>
+                  {' '}
+                  {index + 1}. {item}
+                </Text>
+                <br />
+              </div>
+            )
+          })}
         </div>
-      }
+
+        <Box>
+          <span>{order_num}.</span>
+          <TextInput.default
+            value={content}
+            onChange={value => {
+              changeContent(value)
+            }}
+          />
+        </Box>
+      </div>
     </Box>
   )
 }
