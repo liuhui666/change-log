@@ -6,5 +6,4 @@ const { render } = require('ink');
 
 const ui = importJsx('./ui');
 
-// render(React.createElement(ui));
 render(ui)
