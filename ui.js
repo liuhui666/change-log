@@ -11,6 +11,7 @@ const SearchQuery = () => {
   const [content, changeContent] = useState('')
   useInput((input, key) => {
     if (key.escape) {
+			if(!logList.length) return process.exit()
       let result = ''
       logList.forEach((item, index) => {
         result += `\r\n\t${index + 1}. ${item}`
