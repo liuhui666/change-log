@@ -1,19 +1,16 @@
 'use strict'
 const React = require('react')
 const { useState } = require('react')
-const { render, Box, Color, useInput, Text } = require('ink')
+const {  Box, Color, useInput, Text } = require('ink')
 const TextInput = require('ink-text-input')
-const SelectInput = require('ink-select-input')
 const writeFile = require('./index')
-
-
 
 const SearchQuery = () => {
   const [order_num, changeNum] = useState(1)
   const [logList, changeLogList] = useState([])
   const [content, changeContent] = useState('')
   useInput((input, key) => {
-    if (input === 'q') {
+    if (key.escape) {
       let result = ''
       logList.forEach((item, index) => {
         result += `\r\n\t\t${index + 1}. ${item}`
@@ -25,12 +22,12 @@ const SearchQuery = () => {
       }).then(() => {
         process.exit()
       })
-    }
+		}
+
+
     if (key.return) {
       // 按回车 换行 记录之前的输入
-
       changeNum(order_num + 1)
-
       changeLogList(() => {
         logList.push(content)
         return logList
@@ -42,7 +39,7 @@ const SearchQuery = () => {
     <Box>
       <div>
         <Color white>请输入changelog内容 ：</Color>
-        <Color green>回车换行，输入q退出</Color>
+        <Color green>回车换行提交，Esc退出</Color>
         <br />
         <div>
           {logList.map((item, index) => {
@@ -57,7 +54,6 @@ const SearchQuery = () => {
             )
           })}
         </div>
-
         <Box>
           <span>{order_num}.</span>
           <TextInput.default
