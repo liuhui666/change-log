@@ -48,12 +48,10 @@ function writeFile({ version, url, content }) {
 
 				var file = data.split(/\r\n|\n|\r/gm);
 				var v = version || newVersion;
-				file.splice(1, 0, "\t--------------------------------------------------------------------" +
-					`\r\n\tversion ${v}.${moment().format('YYYYMMDD')}` +
-					"\r\n\t修改：" +
-					`${content}` 
-					// +
-					// "\r\n"
+				file.splice(1, 0, "--------------------------------------------------------------------" +
+					`\r\nversion ${v}.${moment().format('YYYYMMDD')}` +
+					"\r\n修改：" +
+					`${content}`
 				);
 
 				fs.writeFile(path.resolve(__dirname, url), file.join('\r\n'), err => {

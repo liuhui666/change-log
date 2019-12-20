@@ -13,7 +13,7 @@ const SearchQuery = () => {
     if (key.escape) {
       let result = ''
       logList.forEach((item, index) => {
-        result += `\r\n\t\t${index + 1}. ${item}`
+        result += `\r\n\t${index + 1}. ${item}`
       })
 
       writeFile({
