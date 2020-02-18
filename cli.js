@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-'use strict';
-const React = require('react');
+
+const React = require('react');// eslint-disable-line no-unused-vars
 const importJsx = require('import-jsx');
 const { render } = require('ink');
 
 const ui = importJsx('./ui');
 
-render(ui)
+render(ui);

@@ -22,52 +22,51 @@ const moment = require('moment');
 
 3：把数组再转成字符串（使用join方法，join方法的参数也是换行符），然后转化后的字符串再写入原文件
  */
+let v;
 function writeFile({ version, url, content }) {
-	// 读文件
-	var promise = new Promise((resolve, reject) => {
-		fs.readFile(path.resolve(__dirname, url), 'utf8', (err, data) => {
-			if (err) {
-				reject(chalk.red.bold('读取文件失败 \n' + err))
-			} else {
+// 读文件
+  const promise = new Promise((resolve, reject) => {
+    fs.readFile(path.resolve(__dirname, url), 'utf8', (err, data) => {
+      if (err) {
+        reject(chalk.red.bold(`读取文件失败 \n${err}`));
+      } else {
+        v = data.match(/\d+\.\d+\.\d+/)[0];
+        const vArr = v.split('.');
+        const bigVersion = vArr[0];
+        const middleVersion = vArr[1];
+        const smallVersion = vArr[2];
+        let newVersion = '';
+        if (smallVersion / 1 < 9) {
+          newVersion = `${bigVersion}.${middleVersion}.${(smallVersion / 1) + 1}`;
+        } else {
+          if (middleVersion / 1 < 9) {
+            newVersion = `${bigVersion}.${(middleVersion / 1) + 1}.${0}`;
+          } else {
+            newVersion = `${(bigVersion / 1) + 1}.${0}.${0}`;
+          }
+        }
 
-				var v = data.match(/\d+\.\d+\.\d+/)[0];
-				var vArr = v.split('.');
-				var bigVersion = vArr[0];
-				var middleVersion = vArr[1];
-				var smallVersion = vArr[2];
-				var newVersion = '';
-				if (smallVersion / 1 < 9) {
-					newVersion = `${bigVersion}.${middleVersion}.${smallVersion / 1 + 1}`
-				} else {
-					if (middleVersion / 1 < 9) {
-						newVersion = `${bigVersion}.${middleVersion / 1 + 1}.${0}`
-					} else {
-						newVersion = `${bigVersion / 1 + 1}.${0}.${0}`
-					}
-				}
+        const file = data.split(/\r\n|\n|\r/gm);
+        v = version || newVersion;
+        file.splice(1, 0, '--------------------------------------------------------------------' +
+					`\r\nversion ${v}.${moment().format('YYYYMMDD')}` +// eslint-disable-line
+					'\r\n修改：' +// eslint-disable-line
+					`${content}`// eslint-disable-line
+				);// eslint-disable-line
 
-				var file = data.split(/\r\n|\n|\r/gm);
-				var v = version || newVersion;
-				file.splice(1, 0, "--------------------------------------------------------------------" +
-					`\r\nversion ${v}.${moment().format('YYYYMMDD')}` +
-					"\r\n修改：" +
-					`${content}`
-				);
-
-				fs.writeFile(path.resolve(__dirname, url), file.join('\r\n'), err => {
-					if (err) {
-						console.log(chalk.red.bold('写入文件失败 \n' + err))
-						reject(err)
-					} else {
-						console.log(chalk.green.bold(url + ' 写入changelog成功'));
-						resolve();
-
-					}
-				})
-			}
-		})
-	})
-	return promise
+        fs.writeFile(path.resolve(__dirname, url), file.join('\r\n'), (e) => {
+          if (e) {
+            console.log(chalk.red.bold(`写入文件失败 \n${e}`));// eslint-disable-line
+            reject(err);
+          } else {
+            console.log(chalk.green.bold(`${url} 写入changelog成功`));// eslint-disable-line
+            resolve();
+          }
+        });
+      }
+    });
+  });
+  return promise;
 }
 
 module.exports = writeFile;
