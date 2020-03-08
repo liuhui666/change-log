@@ -1,6 +1,6 @@
 {
 	"name": "v-changelog",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"bin": {
 		"v-changelog":"cli.js"
@@ -13,7 +13,9 @@
 	},
 	"files": [
 		"cli.js",
-		"ui.js"
+		"ui.js",
+		"writeFile.js",
+		"findFile.js"
 	],
 	"dependencies": {
 		"import-jsx": "^3.0.0",
