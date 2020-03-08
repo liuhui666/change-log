@@ -2,7 +2,7 @@
 	"name": "change-log",
 	"version": "0.0.1",
 	"license": "MIT",
-	"bin": "cli.js",
+	"main": "cli.js",
 	"engines": {
 		"node": ">=8"
 	},
