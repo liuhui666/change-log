@@ -6,22 +6,18 @@
 ## Install
 
 ```bash
-$ npm install --global change-log
+$ npm install --global changelog
 ```
 
 
-## CLI
+## 使用
 
 ```
-$ change-log --help
+保证你的项目里有version（不区分大小写，不限定文件后缀）的文件
 
-  Usage
-    $ change-log
+半自动化帮你添加version修改内容
 
-  Options
-    --name  Your name
+控制台在项目目录下输入  changlog  命令即可使用
 
-  Examples
-    $ change-log --name=Jane
-    Hello, Jane
+
 ```
