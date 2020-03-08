@@ -22,6 +22,7 @@ const moment = require('moment');
 
 3：把数组再转成字符串（使用join方法，join方法的参数也是换行符），然后转化后的字符串再写入原文件
  */
+const template = '<pre>\r\n</pre>'
 let v;
 function writeFile({ url, content }) {
 	// 读文件
@@ -29,15 +30,14 @@ function writeFile({ url, content }) {
 		fs.readFile(path.resolve(__dirname, url), 'utf8', (err, data) => {
 			if (!data) {
 				// 如果是空文件，写自动写入<pre></pre>
-				fs.writeFileSync(path.resolve(__dirname, url), '<pre></pre>')
+				fs.writeFileSync(path.resolve(__dirname, url), template)
 			}
-
+			let newData = data || template
 			if (err) {
 				reject(chalk.red.bold(`读取文件失败 \n${err}`));
 			} else {
-				console.log(data,!data,'hhehe')
 				// 版本号
-				v = data.match(/\d+\.\d+\.\d+/) ? data.match(/\d+\.\d+\.\d+/)[0] : '0.0.0';
+				v = newData.match(/\d+\.\d+\.\d+/) ? newData.match(/\d+\.\d+\.\d+/)[0] : '0.0.0';
 				const vArr = v.split('.');
 				const bigVersion = vArr[0];
 				const middleVersion = vArr[1];
@@ -53,8 +53,7 @@ function writeFile({ url, content }) {
 					}
 				}
 
-				const fileData = data.split(/\r\n|\n|\r/gm); //按照每一行拆分的
-				console.log(fileData, 'file')
+				const fileData = newData.split(/\r\n|\n|\r/gm); //按照每一行拆分的
 				v = newVersion;
 				// 找出pre标签
 				let preIndex = 0 //默认的<pre>标签是version的第一个标签
