@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 
-const ignoreDir = ['.git', 'node_modules', 'public'];// 不必遍历的文件夹
+const ignoreDir = ['.git', 'node_modules', 'public', 'assets'];// 不必遍历的文件夹
 let targetDir = null; // 目标文件地址，即version文件地址
 
 function loopFind(mainFiledir) {
