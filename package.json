@@ -11,6 +11,11 @@
 	"scripts": {
 		"test": "xo && ava"
 	},
+	"homepage": "https://github.com/liuhui666/v-changelog/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/liuhui666/v-changelog"
+	},
 	"files": [
 		"cli.js",
 		"ui.js",
