@@ -1,9 +1,9 @@
 {
 	"name": "v-changelog",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"license": "MIT",
 	"bin": {
-		"v-changelog":"cli.js"
+		"v-changelog": "cli.js"
 	},
 	"engines": {
 		"node": ">=8"

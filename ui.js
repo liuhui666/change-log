@@ -9,7 +9,7 @@ const findFileDir = require('./findFile.js');
 let versionFileDir = null;
 
 const SearchQuery = () => {
-  const [order_num, changeNum] = useState(1);
+  const [orderNum, changeNum] = useState(1);
   const [logList, changeLogList] = useState([]);
   const [content, changeContent] = useState('');
   const [showContent, changeShowContent] = useState(false);
@@ -43,7 +43,7 @@ const SearchQuery = () => {
     if (key.return) {
       if (!content) return;
       // 按回车 换行 记录之前的输入
-      changeNum(order_num + 1);
+      changeNum(orderNum + 1);
       changeLogList(() => {
         logList.push(content);
         return logList;
@@ -70,7 +70,7 @@ const SearchQuery = () => {
             ))}
           </div>
           <Box>
-            <span>{order_num}.</span>
+            <span>{orderNum}.</span>
             <TextInput.default
               value={content}
               onChange={(value) => {
